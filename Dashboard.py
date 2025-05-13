@@ -12,7 +12,7 @@ app = dash.Dash(__name__)
 app.title = "Dashboard de Control de Tiempos"
 
 # Cargar datos principales
-datos = pd.read_excel("data/Control de tiempos (21).xlsx")
+datos = pd.read_excel("data/Control de tiempos (21).xlsx", engine="openpyxl")
 datos_persona = datos[datos["Auditor"].isin([
     "Carlos Alan Quiroz Herrera", 
     "Guadalupe Ivonne Peñaloza Macías", 
@@ -25,16 +25,16 @@ datos_persona["Clave de la Auditoria"] = datos_persona["Clave de la Auditoria"].
 datos_fecha = datos_persona[datos_persona["Clave de la Auditoria"].str.startswith("AI-24")]
 
 # Datos presupuestados
-datos_previstos = pd.read_excel("data/Libro 2.xlsx")
+datos_previstos = pd.read_excel("data/Libro 2.xlsx", engine="openpyxl")
 datos_previstos = datos_previstos.iloc[:-1]
 
 # Datos de control de horas
-datos_jime = pd.read_excel("data/Datos.xlsx")
+datos_jime = pd.read_excel("data/Datos.xlsx", engine="openpyxl")
 datos_jime["Control de horas"] = datos_jime["Horas presupuestadas"] - datos_jime["Horas Incurridas"]
 datos_jime["Horas presupuestadas restantes"] = datos_jime["Control de horas"].apply(lambda x: x if x > 0 else 0)
 
 # Datos para la tabla
-datos_tabla = pd.read_excel("data/Horas_auditor.xlsx")
+datos_tabla = pd.read_excel("data/Horas_auditor.xlsx", engine="openpyxl")
 datos_tabla2 = datos_tabla[["Integrante", "Horas disponibles para proyectos"]].dropna()
 datos_tabla3 = datos_tabla[["Entidad", "Horas Presupuestas*"]].dropna()
 
